@@ -13,11 +13,12 @@ dashboard_url = "https://amalthea.anatolia.edu.gr/lms/my/"
 def user_login():
     global username
     global password
-    print("This program scrapes amalthea and opens your courses for you and sends over random packet requests. Developed by me Bill (Notice: Credentials are not stored. This app/script is expiremental. Use at your own risk!)")
+    print("This program scrapes amalthea and opens your courses for you and sends over random packet requests.")
+    print("WARNING: This is pre-release software! No warrenty or support is guarenteed.")
+    print("Please login below (Notice: Password does not echo to console):")
     username = str(input("Username: "))
     password = getpass.getpass(prompt='Password(Does not echo to console for security purposes): ')
     
-
 #Call first login
 user_login()
 
@@ -42,7 +43,6 @@ response = session.post(form_action, data=data)
 
 # Check if login was successful by accessing the dashboard page and searching if the page title matches the dashboards page title
 dashboard_page = session.get(dashboard_url)
-    
 
 soup = BeautifulSoup(response.text, 'html.parser')
 title = soup.find('title')
@@ -57,11 +57,10 @@ else:
     sys.exit() 
 
 
+#Searching for courses
 response = session.get(dashboard_url)
 soup = BeautifulSoup(response.text, "html.parser")
 elements = soup.find_all(role="treeitem", class_="type_system depth_2 contains_branch")
-
-#Searching for courses
 url_pattern = re.compile(r"^https?://amalthea.anatolia.edu.gr/lms/course")
 seen = set()
 courses = []
@@ -101,11 +100,15 @@ request = int(input("Enter amount of requests to send in each session: "))
 option = input("Proceed? y/n ")
 if option == "y":
     pass
-else:
-    print("Exiting")
+elif option == "n":
+    print("Exiting...")
     input("press any key to continue")
-    sys.exit()   
-print("Warning: Executing request using mutlithreading. Please wait.")
+    sys.exit()
+else:
+    print("Wrong Input. Exiting...")
+    input("press any key to continue")
+    sys.exit()
+print("Warning: Executing request. Please wait.")
 #Multithreading Sessions again
 with concurrent.futures.ThreadPoolExecutor() as executor:
     for k in courses:
@@ -115,7 +118,7 @@ with concurrent.futures.ThreadPoolExecutor() as executor:
                 print("Treadpool started for session:",k,"for",secs,"second/s")
                 for p in range(secs):
                     session.get(k)
-                    f = requests.get(k)
+                    requests.get(k)
 
 
 print("proccess finished")
