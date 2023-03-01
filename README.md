@@ -8,6 +8,5 @@ May get **flagged** by Windows Defender!
 
 # WARNING: This is pre-release software! No warrenty or support is guarenteed.
 
-### Works as of March 2023
 
 
