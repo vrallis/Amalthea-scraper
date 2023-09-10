@@ -1,4 +1,4 @@
-# **❌This Project Is Abandoned. There are no plans on updating it anymore**
+# **❌This Project Is Abandoned. There are no plans on updating it anymore.**
 
 
 
